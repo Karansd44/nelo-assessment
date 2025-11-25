@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useTaskManager } from '../hooks/useTaskManager';
 import { useDebounce } from '../hooks/useDebounce';
+import { useMailAutomation } from '../hooks/useMailAutomation';
 import { TaskList } from './TaskList';
 import { TaskForm } from './TaskForm';
 import { Modal } from './Modal';
@@ -8,10 +9,11 @@ import { Plus, Layout, Search, Filter, LogOut } from 'lucide-react';
 
 export const Dashboard = ({ onLogout }) => {
     const { tasks, addTask, updateTask, deleteTask, toggleTaskStatus } = useTaskManager();
+    useMailAutomation(tasks);
     const [add, setAdd] = useState(false);
     const [q, setQ] = useState('');
     const [f, setF] = useState('all');
-    const dq = useDebounce(q, 300).toLowerCase(); // Elastic Search: Debounce input
+    const dq = useDebounce(q, 300).toLowerCase();
 
     const filtered = useMemo(() => tasks.filter(t => {
         const match = t.title.toLowerCase().includes(dq) || t.description.toLowerCase().includes(dq);

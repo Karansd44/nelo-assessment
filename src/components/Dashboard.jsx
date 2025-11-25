@@ -11,7 +11,7 @@ export const Dashboard = ({ onLogout }) => {
     const [add, setAdd] = useState(false);
     const [q, setQ] = useState('');
     const [f, setF] = useState('all');
-    const dq = useDebounce(q, 300).toLowerCase();
+    const dq = useDebounce(q, 300).toLowerCase(); // Elastic Search: Debounce input
 
     const filtered = useMemo(() => tasks.filter(t => {
         const match = t.title.toLowerCase().includes(dq) || t.description.toLowerCase().includes(dq);
